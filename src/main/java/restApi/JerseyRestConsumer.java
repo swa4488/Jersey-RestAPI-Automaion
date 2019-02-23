@@ -78,39 +78,18 @@ public class JerseyRestConsumer {
 		return webResource.accept(contentType).get(ClientResponse.class);
 	}
 
-	public String doPostCall(String requestURL, String contentType, String body) {
-		try {
-
-			Client client = Client.create();
-
-			WebResource webResource = client.resource(requestURL);
-
-			ClientResponse response = null;
-
-			logger.info("Hitting url: " + requestURL + " with body: " + body);
-
-			if (contentType != "" || contentType != null) {
-				response = webResource.type(contentType).post(
-						ClientResponse.class, body);
-			} else {
-				response = webResource.post(ClientResponse.class, body);
-			}
-
-			logger.info("The call was made with response status code: " + response.getStatus());
-
-			if (response.getStatus() < 200 || response.getStatus() >= 300) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
-			}
-
-			String output = response.getEntity(String.class);
-			logger.info("Output of the post call was: " + output);
-			return output;
-
-		} catch (Exception e) {
-			logger.error("There was no response for URL", e.getStackTrace());
+	public ClientResponse doPostCall(String requestURL, String contentType, String body) {
+		Client client = Client.create();
+		WebResource webResource = client.resource(requestURL);
+		ClientResponse response = null;
+		logger.info("Hitting url: " + requestURL + " with body: " + body);
+		if (contentType != "" || contentType != null) {
+			response = webResource.type(contentType).post(
+					ClientResponse.class, body);
+		} else {
+			response = webResource.post(ClientResponse.class, body);
 		}
-		return null;
+		return response;
 	}
 
 	public ClientResponse doPostCall(String requestURL, String contentType, HashMap<String, String> header) {

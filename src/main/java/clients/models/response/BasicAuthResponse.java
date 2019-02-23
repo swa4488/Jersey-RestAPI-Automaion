@@ -1,4 +1,4 @@
-package clients.models;
+package clients.models.response;
 
 import java.util.HashMap;
 import java.util.Map;
