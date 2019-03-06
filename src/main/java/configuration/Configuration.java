@@ -22,7 +22,6 @@ public class Configuration {
 
   public String getConfig(String property) {
     String config = null;
-    System.out.println("current directory is ::: " + System.getProperty("user.dir"));
     try {
       properties.load(new FileInputStream("src/main/java/configuration/properties/env.properties"));
       config = properties.getProperty(env);
